@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Dashboard')}"></head>
+<body>
+  <nav th:replace="~{fragments :: nav}"></nav>
+
+  <h1>Dashboard</h1>
+  <div id="msg" class="msg"></div>
+
+  <div class="stats" id="stats"></div>
+
+  <div class="grid2" style="margin-top:14px">
+    <div class="card"><h2>Jobs by status</h2><table><tbody id="statusBody"></tbody></table></div>
+    <div class="card"><h2>Customers</h2><div id="customers" class="muted">None yet.</div></div>
+  </div>
+
+  <div class="card">
+    <h2>Payouts from the platform</h2>
+    <p class="muted">When a customer pays the balance through the platform, the admin pays it to you and records it here.</p>
+    <table>
+      <thead><tr><th>Job</th><th>Amount (LKR)</th><th>Reference</th><th>Paid</th></tr></thead>
+      <tbody id="payoutBody"></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>Upcoming jobs</h2>
+    <table>
+      <thead><tr><th>#</th><th>Customer</th><th>Profession</th><th>When</th><th>Price (LKR)</th><th>Status</th><th></th></tr></thead>
+      <tbody id="upcoming"></tbody>
+    </table>
+    <p id="noUpcoming" class="muted" hidden>No upcoming jobs.</p>
+  </div>
+
+  <script th:src="@{/js/app.js}"></script>
+  <script th:src="@{/js/dashboard.js}"></script>
+</body>
+</html>

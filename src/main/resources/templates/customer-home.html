@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Home')}"></head>
+<body>
+  <nav th:replace="~{fragments :: nav}"></nav>
+
+  <h1>Welcome, <span th:text="${user.fullName}"></span></h1>
+  <p><strong>Verification status:</strong> <span class="badge" th:classappend="${user.status}" th:text="${user.status}"></span>
+    <span th:if="${user.status.name() == 'PENDING'}" class="muted">An admin must verify your profile before you can search or book.</span>
+    <span th:if="${user.status.name() == 'REJECTED'}" class="error">Rejected: <span th:text="${user.rejectionReason}"></span>. Update your <a th:href="@{/profile}">profile</a> to resubmit.</span></p>
+
+  <div class="card">
+    <h2>What would you like to do?</h2>
+    <a class="btn" th:href="@{/customer/find}">Find a technician</a>
+    <a class="btn secondary" th:href="@{/bookings}">My jobs</a>
+    <a class="btn secondary" th:href="@{/profile}">Profile, location &amp; preferences</a>
+  </div>
+
+  <div class="card">
+    <h2>Your details</h2>
+    <table>
+      <tr><th>Full name</th><td th:text="${user.fullName}"></td></tr>
+      <tr><th>Email</th><td th:text="${user.email}"></td></tr>
+      <tr><th>Contact number</th><td th:text="${user.contactNumber}"></td></tr>
+      <tr><th>Gender</th><td th:text="${user.gender}"></td></tr>
+      <tr><th>Languages</th><td><span th:each="l, it : ${user.languages}" th:text="${l.name} + (${it.last} ? '' : ', ')"></span></td></tr>
+      <tr><th>NIC number</th><td th:text="${user.nic}"></td></tr>
+      <tr><th>Address</th><td th:text="${user.address}"></td></tr>
+      <tr><th>Map location</th><td><span th:if="${user.latitude != null}" th:text="${user.latitude} + ', ' + ${user.longitude}"></span><span th:if="${user.latitude == null}" class="muted">Not set yet. Pin it on your profile.</span></td></tr>
+    </table>
+  </div>
+</body>
+</html>

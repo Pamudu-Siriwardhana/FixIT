@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Technician')}"></head>
+<body th:attr="data-id=${technicianId}">
+  <nav th:replace="~{fragments :: nav}"></nav>
+
+  <div id="msg" class="msg"></div>
+  <div id="content" hidden>
+    <h1 id="name"></h1>
+    <p id="rating"></p>
+    <div class="card">
+      <h2>About</h2>
+      <p id="about" class="muted"></p>
+      <table>
+        <thead><tr><th>Profession</th><th>Level</th><th>Notes</th><th>Price range (LKR)</th></tr></thead>
+        <tbody id="skills"></tbody>
+      </table>
+    </div>
+    <div class="card">
+      <h2>Reviews</h2>
+      <div id="reviews"></div>
+    </div>
+    <p><a href="javascript:history.back()">Back</a></p>
+  </div>
+
+  <script th:src="@{/js/app.js}"></script>
+  <script th:src="@{/js/technician-profile.js}"></script>
+</body>
+</html>

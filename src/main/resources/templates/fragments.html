@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(title)">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title th:text="${title} + ' - FixIt'">FixIt</title>
+  <link rel="stylesheet" th:href="@{/css/layout.css}">
+</head>
+<body>
+  <!-- Leaflet (OpenStreetMap) for pages with a map -->
+  <th:block th:fragment="leaflet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+    <script th:src="@{/js/map.js}"></script>
+  </th:block>
+
+  <nav th:fragment="nav" class="topnav">
+    <a class="brand" th:href="@{${homePath}}">FixIt</a>
+    <th:block th:if="${currentRole == 'CUSTOMER'}">
+      <a th:href="@{/customer/home}">Home</a>
+      <a th:href="@{/customer/find}">Find a technician</a>
+      <a th:href="@{/bookings}">My jobs</a>
+      <a th:href="@{/profile}">Profile</a>
+    </th:block>
+    <th:block th:if="${currentRole == 'TECHNICIAN'}">
+      <a th:href="@{/technician/home}">Home</a>
+      <a th:href="@{/technician/dashboard}">Dashboard</a>
+      <a th:href="@{/bookings}">My jobs</a>
+      <a th:href="@{/profile}">Profile</a>
+    </th:block>
+    <th:block th:if="${currentRole == 'ADMIN'}">
+      <a th:href="@{/admin/home}">Verification &amp; catalog</a>
+    </th:block>
+    <form th:action="@{/logout}" method="post"><button type="submit" class="link">Logout</button></form>
+  </nav>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('My jobs')}"></head>
+<body th:attr="data-role=${currentRole}">
+  <nav th:replace="~{fragments :: nav}"></nav>
+
+  <h1>My jobs</h1>
+  <div id="msg" class="msg"></div>
+  <div class="card">
+    <table>
+      <thead><tr><th>#</th><th id="whoHead">With</th><th>Profession</th><th>When</th><th>Price (LKR)</th><th>Status</th><th></th></tr></thead>
+      <tbody id="body"></tbody>
+    </table>
+    <p id="empty" class="muted" hidden>No jobs yet.</p>
+  </div>
+
+  <script th:src="@{/js/app.js}"></script>
+  <script th:src="@{/js/bookings.js}"></script>
+</body>
+</html>

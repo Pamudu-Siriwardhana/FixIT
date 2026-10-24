@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Find a technician')}"></head>
+<body>
+  <nav th:replace="~{fragments :: nav}"></nav>
+
+  <h1>Find a technician</h1>
+  <div id="msg" class="msg"></div>
+
+  <div class="card">
+    <h2>Describe the problem</h2>
+    <p class="muted">We suggest the type of technician that fits best and show the nearest ones.</p>
+    <textarea id="problem" placeholder="e.g. The kitchen tap is leaking and the sink is blocked"></textarea>
+    <button type="button" id="suggest">Suggest a technician</button>
+    <div id="suggestion" class="muted"></div>
+  </div>
+
+  <div class="card">
+    <h2>Search nearby</h2>
+    <div class="row">
+      <label>Profession <select id="fProfession"><option value="">Any</option></select></label>
+      <label>Radius (km) <input type="number" id="fRadius" min="0.1" step="0.1" placeholder="from preferences"></label>
+    </div>
+    <label><input type="checkbox" id="fPrefs" checked> Apply my saved preferences (gender, languages, budget, rating)</label>
+    <p class="muted" id="originText">Searching around your saved location. Click the map to search around another point.</p>
+    <button type="button" id="search">Search</button>
+    <div id="map" class="map"></div>
+  </div>
+
+  <div class="card">
+    <h2>Technicians <span id="count" class="muted"></span></h2>
+    <div id="results"><p class="muted">Run a search to see technicians.</p></div>
+  </div>
+
+  <dialog id="bookDialog">
+    <form id="bookForm">
+      <h2>Book <span id="bTech"></span></h2>
+      <div class="row">
+        <label>Profession <select id="bProf" required></select></label>
+        <label>When <input type="datetime-local" id="bWhen" required></label>
+      </div>
+      <label>What needs doing <textarea id="bDesc" required maxlength="2000"></textarea></label>
+      <p class="muted">Where is the job? Click the map or drag the pin.</p>
+      <div id="bMap" class="map"></div>
+      <label>Job address <input type="text" id="bAddress"></label>
+      <label>Your price offer (LKR) <input type="number" id="bPrice" min="0" step="0.01" required></label>
+      <p class="muted" id="bRange"></p>
+      <div id="bMsg" class="msg"></div>
+      <button type="submit">Send booking request</button>
+      <button type="button" class="secondary" id="bCancel">Cancel</button>
+    </form>
+  </dialog>
+
+  <th:block th:replace="~{fragments :: leaflet}"></th:block>
+  <script th:src="@{/js/app.js}"></script>
+  <script th:src="@{/js/find.js}"></script>
+</body>
+</html>

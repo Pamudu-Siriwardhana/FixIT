@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Job')}"></head>
+<body th:attr="data-role=${currentRole},data-id=${bookingId}">
+  <nav th:replace="~{fragments :: nav}"></nav>
+
+  <p><a th:href="@{/bookings}">&larr; My jobs</a></p>
+  <h1>Job #<span th:text="${bookingId}"></span> <span id="statusBadge" class="badge"></span></h1>
+  <div id="msg" class="msg"></div>
+
+  <div class="grid2">
+    <div class="card"><h2>Details</h2><div id="summary"></div></div>
+    <div class="card"><h2>Job location</h2><div id="map" class="map"></div><div id="address" class="muted"></div></div>
+  </div>
+
+  <div class="card">
+    <h2>Price negotiation</h2>
+    <div id="offers"></div>
+    <div id="negotiation"></div>
+  </div>
+
+  <div class="card" id="actionsCard" hidden>
+    <h2>Job status</h2>
+    <div id="actions"></div>
+  </div>
+
+  <div class="card" id="routesCard" hidden>
+    <h2>Route to the job</h2>
+    <p class="muted">Shows travel time and directions from where you are (or your saved location) to the job.</p>
+    <button type="button" id="routesBtn">Show routes</button>
+    <div id="routesOut"></div>
+  </div>
+
+  <div class="card" id="paymentsCard" hidden>
+    <h2>Payments</h2>
+    <div id="paymentInfo" class="muted"></div>
+    <table>
+      <thead><tr><th>Type</th><th>Method</th><th>Amount (LKR)</th><th>Status</th><th>Proof</th><th></th></tr></thead>
+      <tbody id="payBody"></tbody>
+    </table>
+    <div id="payForms"></div>
+  </div>
+
+  <div class="card" id="ratingCard" hidden>
+    <h2>Rating</h2>
+    <div id="ratingBody"></div>
+  </div>
+
+  <th:block th:replace="~{fragments :: leaflet}"></th:block>
+  <script th:src="@{/js/app.js}"></script>
+  <script th:src="@{/js/booking.js}"></script>
+</body>
+</html>

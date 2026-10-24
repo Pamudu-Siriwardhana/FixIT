@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Profile')}"></head>
+<body th:attr="data-role=${currentRole}">
+  <nav th:replace="~{fragments :: nav}"></nav>
+
+  <h1>Profile</h1>
+  <p>Status: <span id="status" class="badge">...</span> <span id="statusNote" class="muted"></span></p>
+  <div id="msg" class="msg"></div>
+
+  <div class="card">
+    <h2>Basic details</h2>
+    <p class="muted">Email and NIC identify your account and cannot be changed here. <span id="idText"></span></p>
+    <form id="detailsForm">
+      <div class="row">
+        <label>Full name <input type="text" id="dName" required maxlength="100"></label>
+        <label>Contact number <input type="text" id="dContact" required pattern="\+?[0-9]{9,15}" title="9-15 digits"></label>
+        <label>Gender
+          <select id="dGender"><option>Male</option><option>Female</option><option>Other</option></select>
+        </label>
+      </div>
+      <button type="submit">Save details</button>
+    </form>
+  </div>
+
+  <div class="card">
+    <h2>Map location</h2>
+    <p class="muted">Click the map or drag the pin to set where you are. Use "My location" to take it from your device.</p>
+    <div id="map" class="map"></div>
+    <label>Address <input type="text" id="address"></label>
+    <button type="button" id="useMyLocation" class="secondary">My location</button>
+    <button type="button" id="saveLocation">Save location</button>
+    <span id="locText" class="muted"></span>
+  </div>
+
+  <div class="card">
+    <h2>Languages I speak</h2>
+    <div id="langBox"></div>
+    <button type="button" id="saveLangs">Save languages</button>
+  </div>
+
+  <div class="card">
+    <h2>Verification documents</h2>
+    <p class="muted">Upload a photo or scan of your NIC (technicians: also certificates). PNG, JPEG or PDF, up to 5 MB each. An admin checks them before verifying you.</p>
+    <table><tbody id="docBody"></tbody></table>
+    <form id="docForm">
+      <div class="row">
+        <label>What is it? <input type="text" id="docLabel" maxlength="100" placeholder="NIC front"></label>
+        <label>File <input type="file" id="docFile" accept="image/png,image/jpeg,application/pdf" required></label>
+      </div>
+      <button type="submit">Upload</button>
+    </form>
+  </div>
+
+  <div class="card" th:if="${currentRole == 'CUSTOMER'}">
+    <h2>Search preferences</h2>
+    <p class="muted">Used to filter technicians when you search. Leave a field empty for no limit.</p>
+    <form id="prefForm">
+      <div class="row">
+        <label>Technician gender
+          <select id="prefGender"><option value="">Any</option><option>Male</option><option>Female</option><option>Other</option></select>
+        </label>
+        <label>Max distance (km) <input type="number" id="prefDistance" min="0.1" step="0.1"></label>
+        <label>Minimum rating (0-5) <input type="number" id="prefRating" min="0" max="5" step="0.1"></label>
+      </div>
+      <div class="row">
+        <label>Budget from (LKR) <input type="number" id="prefMin" min="0" step="1"></label>
+        <label>Budget up to (LKR) <input type="number" id="prefMax" min="0" step="1"></label>
+      </div>
+      <h3>Technician should speak</h3>
+      <div id="prefLangBox"></div>
+      <button type="submit">Save preferences</button>
+    </form>
+  </div>
+
+  <div th:if="${currentRole == 'TECHNICIAN'}">
+    <div class="card">
+      <h2>Qualification &amp; experience</h2>
+      <form id="techForm">
+        <label>Qualifications <textarea id="qualification" maxlength="2000"></textarea></label>
+        <label>Years of experience <input type="number" id="experience" min="0" max="80"></label>
+        <button type="submit">Save</button>
+      </form>
+    </div>
+
+    <div class="card">
+      <h2>My professions</h2>
+      <table>
+        <thead><tr><th>Profession</th><th>Level</th><th>Notes</th><th>Price range (LKR)</th><th></th></tr></thead>
+        <tbody id="skillBody"></tbody>
+      </table>
+      <h3>Add a profession</h3>
+      <form id="skillForm">
+        <div class="row">
+          <label>Profession <select id="skillProf"></select></label>
+          <label>Skill level <select id="skillLevel"><option th:each="l : ${levels}" th:value="${l}" th:text="${l}"></option></select></label>
+        </div>
+        <label>Qualification / experience for this profession <input type="text" id="skillNotes" maxlength="1000"></label>
+        <button type="submit">Add</button>
+      </form>
+    </div>
+  </div>
+
+  <th:block th:replace="~{fragments :: leaflet}"></th:block>
+  <script th:src="@{/js/app.js}"></script>
+  <script th:src="@{/js/profile.js}"></script>
+</body>
+</html>

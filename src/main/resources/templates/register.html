@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sign up</title>
+  <link rel="stylesheet" th:href="@{/css/layout.css}">
+</head>
+<body>
+  <h1>Sign up</h1>
+
+  <form th:action="@{/register}" th:object="${form}" method="post">
+    <fieldset>
+      <legend>I am a</legend>
+      <label><input type="radio" th:field="*{role}" value="CUSTOMER"> Customer</label>
+      <label><input type="radio" th:field="*{role}" value="TECHNICIAN"> Technician</label>
+      <span class="error" th:if="${#fields.hasErrors('role')}" th:errors="*{role}"></span>
+    </fieldset>
+
+    <label>Full name <input type="text" th:field="*{fullName}"></label>
+    <span class="error" th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}"></span>
+
+    <label>Email <input type="email" th:field="*{email}"></label>
+    <span class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+
+    <label>Contact number <input type="tel" th:field="*{contactNumber}"></label>
+    <span class="error" th:if="${#fields.hasErrors('contactNumber')}" th:errors="*{contactNumber}"></span>
+
+    <label>Gender
+      <select th:field="*{gender}">
+        <option value="">-- select --</option>
+        <option th:each="g : ${genders}" th:value="${g}" th:text="${g}"></option>
+      </select>
+    </label>
+    <span class="error" th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}"></span>
+
+    <fieldset>
+      <legend>Languages you speak</legend>
+      <label th:each="l : ${languages}"><input type="checkbox" th:field="*{languageIds}" th:value="${l.id}"> <span th:text="${l.name}"></span></label>
+      <span class="error" th:if="${#fields.hasErrors('languageIds')}" th:errors="*{languageIds}"></span>
+    </fieldset>
+
+    <label>NIC number <input type="text" th:field="*{nic}"></label>
+    <span class="error" th:if="${#fields.hasErrors('nic')}" th:errors="*{nic}"></span>
+
+    <label>Address <textarea th:field="*{address}" rows="3"></textarea></label>
+    <span class="error" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></span>
+
+    <label>Password <input type="password" th:field="*{password}"></label>
+    <span class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+
+    <label>Confirm password <input type="password" th:field="*{confirmPassword}"></label>
+    <span class="error" th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}"></span>
+
+    <button type="submit">Create account</button>
+  </form>
+
+  <p>Already registered? <a th:href="@{/login}">Login</a></p>
+</body>
+</html>

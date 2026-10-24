@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Admin')}"></head>
+<body>
+  <nav th:replace="~{fragments :: nav}"></nav>
+
+  <h1>Admin: <span th:text="${user.fullName}"></span></h1>
+
+  <div class="card">
+  <h2>Profiles waiting for verification</h2>
+  <p th:if="${#lists.isEmpty(pending)}">Nothing to verify.</p>
+  <table th:unless="${#lists.isEmpty(pending)}">
+    <tr><th>Name</th><th>Role</th><th>NIC</th><th>Contact</th><th>Details</th><th>Documents</th><th></th></tr>
+    <tr th:each="u : ${pending}">
+      <td th:text="${u.fullName()}"></td>
+      <td th:text="${u.role()}"></td>
+      <td th:text="${u.nic()}"></td>
+      <td th:text="${u.contactNumber()}"></td>
+      <td>
+        <span th:text="${u.address()}"></span>
+        <span th:if="${u.qualification() != null}"> | <span th:text="${u.qualification()}"></span></span>
+        <span th:if="${u.skills() != null}"> | <span th:each="s : ${u.skills()}" th:text="${s.profession()} + ' (' + ${s.skillLevel()} + ') '"></span></span>
+      </td>
+      <td class="docs" th:attr="data-user=${u.id()}"><span class="muted">...</span></td>
+      <td>
+        <form th:action="@{/admin/users/{id}/approve(id=${u.id()})}" method="post"><button type="submit">Approve</button></form>
+        <form th:action="@{/admin/users/{id}/reject(id=${u.id()})}" method="post">
+          <input type="text" name="reason" placeholder="Reason" required>
+          <button type="submit">Reject</button>
+        </form>
+      </td>
+    </tr>
+  </table>
+
+  </div>
+
+  <div class="card">
+  <h2>Platform payments waiting for confirmation</h2>
+  <p th:if="${#lists.isEmpty(payments)}">No pending payments.</p>
+  <table th:unless="${#lists.isEmpty(payments)}">
+    <tr><th>Booking</th><th>Type</th><th>Amount</th><th>Proof</th><th></th></tr>
+    <tr th:each="p : ${payments}">
+      <td th:text="${p.bookingId()}"></td>
+      <td th:text="${p.type()}"></td>
+      <td th:text="${p.amount()}"></td>
+      <td><a th:if="${p.hasProof()}" th:href="@{/api/payments/{id}/proof(id=${p.id()})}" target="_blank" th:text="${p.proofFileName()}"></a></td>
+      <td>
+        <form th:action="@{/admin/payments/{id}/confirm(id=${p.id()})}" method="post"><button type="submit">Confirm</button></form>
+        <form th:action="@{/admin/payments/{id}/reject(id=${p.id()})}" method="post">
+          <input type="text" name="reason" placeholder="Reason">
+          <button type="submit">Reject</button>
+        </form>
+      </td>
+    </tr>
+  </table>
+  </div>
+
+  <div class="card">
+    <h2>Technician payouts</h2>
+    <p class="muted">Balances customers paid through the platform (confirmed) that you still owe the technician. Pay them outside the app, then record the transfer reference.</p>
+    <div id="payoutMsg" class="msg"></div>
+    <table>
+      <thead><tr><th>Job</th><th>Technician</th><th>Amount (LKR)</th><th>Reference</th><th></th></tr></thead>
+      <tbody id="payoutPending"></tbody>
+    </table>
+    <h3>Paid out</h3>
+    <table>
+      <thead><tr><th>Job</th><th>Technician</th><th>Amount (LKR)</th><th>Reference</th><th>Paid</th></tr></thead>
+      <tbody id="payoutDone"></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>Catalog</h2>
+    <div id="catalogMsg" class="msg"></div>
+    <div class="grid2">
+      <div>
+        <h3>Languages</h3>
+        <p id="langList" class="muted">Loading...</p>
+        <form id="langForm" class="row">
+          <label>New language <input type="text" id="langName" required></label>
+          <div><button type="submit">Add</button></div>
+        </form>
+      </div>
+      <div>
+        <h3>Add profession</h3>
+        <form id="profForm">
+          <label>Name <input type="text" id="pName" required></label>
+          <div class="row">
+            <label>Min price (LKR) <input type="number" id="pMin" min="0" step="0.01" required></label>
+            <label>Max price (LKR) <input type="number" id="pMax" min="0" step="0.01" required></label>
+          </div>
+          <label>Keywords for problem matching (comma separated, any language) <input type="text" id="pKeys"></label>
+          <button type="submit">Add profession</button>
+        </form>
+      </div>
+    </div>
+    <h3>Professions and price ranges</h3>
+    <p class="muted">Bookings and counter offers must stay inside the range.</p>
+    <table>
+      <thead><tr><th>Name</th><th>Min</th><th>Max</th><th>Keywords</th><th></th></tr></thead>
+      <tbody id="profBody"></tbody>
+    </table>
+  </div>
+
+  <script th:src="@{/js/app.js}"></script>
+  <script th:src="@{/js/admin.js}"></script>
+</body>
+</html>
