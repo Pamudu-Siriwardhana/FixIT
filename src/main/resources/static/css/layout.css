@@ -1,0 +1,76 @@
+/* Simple, light styling. One accent colour, system fonts. */
+:root { --accent: #d11b52; --dark: #131721; --accent-dark: #131721; --bg: #fff; --line: rgba(19, 23, 33, .2); --text: #131721; --muted: rgba(19, 23, 33, .65); --bad: #d11b52; --good: #131721; --tint: rgba(209, 27, 82, .09); }
+* { box-sizing: border-box; }
+body { max-width: 960px; margin: 0 auto; padding: 16px; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; color: var(--text); background: var(--bg); line-height: 1.45; }
+h1 { font-size: 1.6rem; margin: 8px 0 12px; }
+h2 { font-size: 1.15rem; margin: 0 0 10px; }
+h3 { font-size: 1rem; margin: 14px 0 6px; }
+a { color: var(--accent); }
+.muted { color: var(--muted); font-size: .9rem; }
+
+/* navigation */
+.topnav { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 16px; padding: 8px 0 12px; border-bottom: 1px solid var(--line); margin-bottom: 12px; }
+.topnav .brand { font-weight: 700; font-size: 1.1rem; text-decoration: none; margin-right: 8px; }
+.topnav a { text-decoration: none; }
+.topnav a:hover { text-decoration: underline; }
+.topnav form { margin-left: auto; display: inline; }
+
+/* cards and layout */
+.card { background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 14px; margin-bottom: 14px; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+@media (max-width: 720px) { .grid2 { grid-template-columns: 1fr; } }
+.row { display: flex; flex-wrap: wrap; gap: 8px; align-items: end; }
+.row > * { flex: 1 1 140px; }
+.map { height: 320px; border: 1px solid var(--line); border-radius: 6px; margin: 8px 0; }
+
+/* forms */
+form label, .field { display: block; margin-top: 10px; font-size: .92rem; }
+input, select, textarea { display: block; width: 100%; padding: 7px 8px; border: 1px solid var(--line); border-radius: 6px; font: inherit; background: #fff; }
+textarea { min-height: 70px; }
+input[type=checkbox], input[type=radio] { display: inline; width: auto; }
+fieldset { border: 1px solid var(--line); border-radius: 6px; margin-top: 12px; }
+fieldset label { display: inline-block; margin-right: 14px; }
+button, .btn { display: inline-block; margin-top: 12px; padding: 7px 14px; border: 1px solid var(--accent); border-radius: 6px; background: var(--accent); color: #fff; font: inherit; cursor: pointer; text-decoration: none; }
+button:hover, .btn:hover { background: var(--accent-dark); }
+button.secondary { background: #fff; color: var(--accent); }
+button.secondary:hover { background: var(--tint); }
+button.danger { background: #fff; color: var(--bad); border-color: var(--bad); }
+button.link { background: none; border: none; color: var(--accent); padding: 0; margin: 0; }
+button[disabled] { opacity: .5; cursor: not-allowed; }
+
+/* tables */
+table { width: 100%; border-collapse: collapse; }
+th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-weight: 600; color: var(--muted); font-size: .85rem; }
+
+/* messages and badges */
+.error { display: block; color: var(--bad); font-size: .9rem; }
+.msg { padding: 8px 10px; border-radius: 6px; margin: 8px 0; background: var(--tint); }
+.msg.bad { background: var(--tint); color: var(--bad); border-left: 3px solid var(--bad); }
+.msg:empty { display: none; }
+.badge { display: inline-block; padding: 1px 8px; border-radius: 10px; font-size: .8rem; background: rgba(19, 23, 33, .08); }
+.badge.VERIFIED, .badge.PAID, .badge.COMPLETED, .badge.CONFIRMED { background: var(--dark); color: #fff; }
+.badge.REJECTED, .badge.CANCELLED { background: var(--tint); color: var(--bad); }
+.badge.PENDING, .badge.REQUESTED, .badge.NEGOTIATING, .badge.IN_PROGRESS { background: #fff; color: var(--dark); border: 1px solid var(--dark); }
+
+/* results and stats */
+.result { border-top: 1px solid var(--line); padding: 10px 0; }
+.result:first-child { border-top: none; }
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+.stat { background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 10px; }
+.stat b { display: block; font-size: 1.3rem; }
+dialog { border: 1px solid var(--line); border-radius: 8px; max-width: 560px; width: 94%; }
+dialog::backdrop { background: rgba(19, 23, 33, .45); }
+.tabs button { margin-right: 6px; }
+ol.steps { padding-left: 20px; margin: 6px 0; }
+
+/* address search above maps */
+.addr-search { margin: 8px 0 0; }
+.addr-search .row { align-items: end; }
+.addr-search button { margin-top: 0; }
+.addr-results { list-style: none; margin: 4px 0 0; padding: 0; font-size: .9rem; }
+.addr-results li { padding: 3px 0; border-bottom: 1px solid var(--line); }
+.addr-results button.link { text-align: left; }
+.stars { color: var(--accent); letter-spacing: 1px; }
+.review { border-top: 1px solid var(--line); padding: 8px 0; }
+.addr-search .row > div { flex: 0 0 auto; }
