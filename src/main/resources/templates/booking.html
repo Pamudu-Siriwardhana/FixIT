@@ -6,6 +6,7 @@
 
   <p><a th:href="@{/bookings}">&larr; My jobs</a></p>
   <h1>Job #<span th:text="${bookingId}"></span> <span id="statusBadge" class="badge"></span></h1>
+  <ol id="stepper" class="stepper" aria-label="Job progress"></ol>
   <div id="msg" class="msg"></div>
 
   <div class="grid2">

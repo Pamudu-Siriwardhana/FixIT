@@ -51,13 +51,24 @@ function flash(el, text, ok) {
   if (!el) return;
   el.textContent = text || '';
   el.classList.toggle('bad', ok === false);
+  clearTimeout(el._t);
+  if (text && ok === true) el._t = setTimeout(() => { if (el.textContent === text) el.textContent = ''; }, 5000);
 }
 
 /** Wraps a click/submit handler so errors land in the message box. */
 function guarded(msgEl, fn) {
   return async function (ev) {
     if (ev && ev.preventDefault) ev.preventDefault();
+    // the clicked/submitting button shows a spinner and cannot be pressed twice
+    const btn = ev ? (ev.submitter || ev.currentTarget) : null;
+    const busy = btn && btn.tagName === 'BUTTON' ? btn : null;
+    if (busy) {
+      if (busy.getAttribute('aria-busy') === 'true') return;
+      busy.setAttribute('aria-busy', 'true');
+      busy.disabled = true;
+    }
     try { await fn(ev); } catch (e) { flash(msgEl, e.message, false); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+    finally { if (busy) { busy.disabled = false; busy.removeAttribute('aria-busy'); } }
   };
 }
 

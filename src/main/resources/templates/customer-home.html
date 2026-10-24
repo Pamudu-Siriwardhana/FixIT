@@ -4,10 +4,14 @@
 <body>
   <nav th:replace="~{fragments :: nav}"></nav>
 
-  <h1>Welcome, <span th:text="${user.fullName}"></span></h1>
-  <p><strong>Verification status:</strong> <span class="badge" th:classappend="${user.status}" th:text="${user.status}"></span>
+  <div class="hero">
+    <img class="herologo" th:src="@{/img/logo-dark.png}" alt="">
+    <p class="eyebrow">Welcome back</p>
+    <h1 th:text="${user.fullName}"></h1>
+    <p><strong>Status:</strong> <span class="badge" th:classappend="${user.status}" th:text="${user.status}"></span>
     <span th:if="${user.status.name() == 'PENDING'}" class="muted">An admin must verify your profile before you can search or book.</span>
     <span th:if="${user.status.name() == 'REJECTED'}" class="error">Rejected: <span th:text="${user.rejectionReason}"></span>. Update your <a th:href="@{/profile}">profile</a> to resubmit.</span></p>
+  </div>
 
   <div class="card">
     <h2>What would you like to do?</h2>

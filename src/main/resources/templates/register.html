@@ -5,9 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Sign up</title>
   <link rel="stylesheet" th:href="@{/css/layout.css}">
+  <link rel="icon" type="image/png" th:href="@{/img/favicon.png}">
+  <meta name="theme-color" content="#131721">
 </head>
-<body>
-  <h1>Sign up</h1>
+<body class="auth wide">
+  <a class="authbrand" th:href="@{/}"><img th:src="@{/img/logo-light.png}" alt="FixIt"></a>
+  <h1>Create your account</h1>
 
   <form th:action="@{/register}" th:object="${form}" method="post">
     <fieldset>

@@ -5,16 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Login</title>
   <link rel="stylesheet" th:href="@{/css/layout.css}">
+  <link rel="icon" type="image/png" th:href="@{/img/favicon.png}">
+  <meta name="theme-color" content="#131721">
 </head>
-<body>
-  <h1>Login</h1>
-  <p th:if="${param.error}">Invalid email or password.</p>
-  <p th:if="${param.logout}">You have been logged out.</p>
-  <p th:if="${param.registered}">Account created. Please log in.</p>
+<body class="auth">
+  <a class="authbrand" th:href="@{/}"><img th:src="@{/img/logo-light.png}" alt="FixIt"></a>
+  <h1>Welcome back</h1>
+  <p class="notice" th:if="${param.error}">Invalid email or password.</p>
+  <p class="muted" th:if="${param.logout}">You have been logged out.</p>
+  <p class="muted" th:if="${param.registered}">Account created. Please log in.</p>
 
   <form th:action="@{/login}" method="post">
-    <label>Email <input type="email" name="username" required></label>
-    <label>Password <input type="password" name="password" required></label>
+    <label>Email <input type="email" name="username" required autofocus autocomplete="username"></label>
+    <label>Password <input type="password" name="password" required autocomplete="current-password"></label>
     <button type="submit">Login</button>
   </form>
 

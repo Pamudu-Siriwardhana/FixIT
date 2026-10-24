@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title th:text="${title} + ' - FixIt'">FixIt</title>
   <link rel="stylesheet" th:href="@{/css/layout.css}">
+  <link rel="icon" type="image/png" th:href="@{/img/favicon.png}">
+  <meta name="theme-color" content="#131721">
 </head>
 <body>
   <!-- Leaflet (OpenStreetMap) for pages with a map -->
@@ -15,7 +17,7 @@
   </th:block>
 
   <nav th:fragment="nav" class="topnav">
-    <a class="brand" th:href="@{${homePath}}">FixIt</a>
+    <a class="brand" th:href="@{${homePath}}"><img th:src="@{/img/logo-nav.png}" alt="FixIt" height="30"></a>
     <th:block th:if="${currentRole == 'CUSTOMER'}">
       <a th:href="@{/customer/home}">Home</a>
       <a th:href="@{/customer/find}">Find a technician</a>
@@ -32,6 +34,7 @@
       <a th:href="@{/admin/home}">Verification &amp; catalog</a>
     </th:block>
     <form th:action="@{/logout}" method="post"><button type="submit" class="link">Logout</button></form>
+    <script th:src="@{/js/ui.js}"></script>
   </nav>
 </body>
 </html>

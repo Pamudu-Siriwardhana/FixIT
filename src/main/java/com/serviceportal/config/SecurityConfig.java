@@ -52,7 +52,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http, AuthenticationSuccessHandler successHandler) throws Exception {
         http
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/", "/login", "/register", "/css/**", "/js/**").permitAll()
+                .requestMatchers("/", "/login", "/register", "/css/**", "/js/**", "/img/**").permitAll()
                 .requestMatchers("/admin/**", "/api/admin/**").hasRole("ADMIN")
                 .requestMatchers("/customer/**", "/api/customer/**", "/api/discovery/**").hasRole("CUSTOMER")
                 .requestMatchers("/technician/**", "/api/technician/**").hasRole("TECHNICIAN")

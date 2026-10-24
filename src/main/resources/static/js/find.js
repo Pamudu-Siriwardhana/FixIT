@@ -34,7 +34,7 @@
     layer.clearLayers();
     $('#count').textContent = '(' + list.length + ')';
     if (!list.length) {
-      $('#results').innerHTML = '<p class="muted">No technicians match. Try a bigger radius, another profession, or untick "Apply my saved preferences".</p>';
+      $('#results').innerHTML = '<div class="empty">No technicians match. Try a bigger radius, another profession, or untick "Apply my saved preferences".</div>';
       return;
     }
     $('#results').innerHTML = list.map((t, i) =>
@@ -60,7 +60,10 @@
     if ($('#fRadius').value) p.set('radiusKm', $('#fRadius').value);
     if ($('#fProfession').value) p.set('professionId', $('#fProfession').value);
     flash(msg, '');
-    render(await api('GET', '/api/discovery/technicians?' + p));
+    $('#results').innerHTML = '<div class="skeleton"></div><div class="skeleton"></div>';
+    try {
+      render(await api('GET', '/api/discovery/technicians?' + p));
+    } catch (e) { $('#results').innerHTML = ''; throw e; }
   }
   $('#search').onclick = guarded(msg, search);
 

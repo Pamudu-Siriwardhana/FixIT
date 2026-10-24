@@ -24,6 +24,13 @@
     sb.textContent = b.status.replace('_', ' ');
     sb.className = 'badge ' + b.status;
 
+    const flow = ['REQUESTED', 'NEGOTIATING', 'CONFIRMED', 'IN_PROGRESS', 'COMPLETED', 'PAID'];
+    const names = { REQUESTED: 'Requested', NEGOTIATING: 'Negotiating', CONFIRMED: 'Confirmed', IN_PROGRESS: 'In progress', COMPLETED: 'Completed', PAID: 'Paid' };
+    const at = flow.indexOf(b.status);
+    $('#stepper').innerHTML = b.status === 'CANCELLED'
+      ? '<li class="stopped">Cancelled</li>'
+      : flow.map((s, i) => '<li class="' + (i < at ? 'done' : i === at ? 'now' : '') + '"' + (i === at ? ' aria-current="step"' : '') + '>' + names[s] + '</li>').join('');
+
     const contact = p => p.contactNumber ? ' &middot; ' + esc(p.contactNumber) : ' <span class="muted">(contact shown once the price is agreed)</span>';
     $('#summary').innerHTML =
       '<table><tr><th>Customer</th><td>' + esc(b.customer.fullName) + contact(b.customer) + '</td></tr>' +

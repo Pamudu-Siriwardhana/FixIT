@@ -54,10 +54,11 @@ class PagesRenderTest {
     void publicPagesAndScriptsAreReachableWithoutLogin() throws Exception {
         mvc.perform(get("/login")).andExpect(status().isOk());
         mvc.perform(get("/register")).andExpect(status().isOk()).andExpect(content().string(containsString("Languages you speak")));
-        for (String js : new String[]{"app.js", "map.js", "profile.js", "find.js", "booking.js", "bookings.js", "dashboard.js", "admin.js", "technician-profile.js"}) {
+        for (String js : new String[]{"app.js", "map.js", "profile.js", "find.js", "booking.js", "bookings.js", "dashboard.js", "admin.js", "technician-profile.js", "ui.js"}) {
             mvc.perform(get("/js/" + js)).andExpect(status().isOk());
         }
         mvc.perform(get("/css/layout.css")).andExpect(status().isOk());
+        mvc.perform(get("/img/tools-bg.webp")).andExpect(status().isOk());
     }
 
     @Test
